@@ -3,7 +3,6 @@ from flask_restful import Resource, reqparse
 
 from src.data_access.builders.todo_builder import TodoBuilder
 from src.middleware.auth.auth_context import get_auth_context
-from src.middleware.exc.auth.user_not_logged_in_error import UserNotLoggedInError
 from src.middleware.exc.todos import *
 from src.middleware.todo_store import TodoStore
 
@@ -23,7 +22,7 @@ class TodosResource(Resource):
         try:
             user_id = get_auth_context()
             todo = TodoBuilder(user_id, title) \
-                .set_datetime(datetime) \
+                .set_date_time(datetime) \
                 .build()
             inserted_entry = self._todo_store.save_todo(todo)
             return jsonify(inserted_entry.toDict())
@@ -34,7 +33,7 @@ class TodosResource(Resource):
         try:
             user_id = get_auth_context()
             entries = self._todo_store.get_all_todos(user_id)
-            entries_dicts = list(map(lambda entry: entry.toDict(), entries))
-            return jsonify(entries_dicts)
+            entries_serialized = list(map(lambda entry: entry.toDict(), entries))
+            return jsonify(entries_serialized)
         except TodoException as e:
             abort(e.code, e)

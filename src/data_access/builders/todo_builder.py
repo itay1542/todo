@@ -7,18 +7,18 @@ from src.middleware.exc.todos import *
 
 
 class TodoBuilder:
-    datetime = None
+    _datetime = None
 
     def __init__(self, user_id: int, title: str):
-        self.user_id = user_id
-        self.title = title
+        self._user_id = user_id
+        self._title = title
 
-    def set_datetime(self, datetime: str):
+    def set_date_time(self, date_time: str):
         datetime_format = None
         try:
             datetime_format = get_config()["DATETIME_FORMAT"]
-            datetime = dt.strptime(datetime, datetime_format)
-            self.datetime = datetime
+            date_time_parsed = dt.strptime(date_time, datetime_format)
+            self._date_time = date_time_parsed
             return self
         except KeyError:
             raise BadServerConfiguration("DATETIME_FORMAT")
@@ -26,4 +26,4 @@ class TodoBuilder:
             raise UnsupportedDatetimeFormatError(datetime_format)
 
     def build(self):
-        return TodoEntry(self)
+        return TodoEntry(self._user_id, self._title, self._date_time)
