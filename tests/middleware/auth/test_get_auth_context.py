@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -8,7 +8,7 @@ from src.middleware.exc.auth.user_not_logged_in_error import UserNotLoggedInErro
 
 class TestGetAuthContext:
 
-    def test_get_auth_context_returns_value_of_request_cookie(self):
+    def test_get_auth_context_returns_value_of_request_cookie(self, mocker):
         expected_cookie_value = 1
         current_app_mock = MagicMock()
         current_app_mock.config = {
@@ -18,18 +18,18 @@ class TestGetAuthContext:
         request_mock.cookies = {
             "a": expected_cookie_value
         }
-        with patch('src.middleware.auth.auth_context.current_app', current_app_mock):
-            with patch('src.middleware.auth.auth_context.request', request_mock):
-                assert get_auth_context() == expected_cookie_value
+        mocker.patch('src.middleware.auth.auth_context.current_app', current_app_mock)
+        mocker.patch('src.middleware.auth.auth_context.request', request_mock)
+        assert get_auth_context() == expected_cookie_value
 
-    def test_get_auth_context_throws_auth_error_on_missing_cookie(self):
+    def test_get_auth_context_throws_auth_error_on_missing_cookie(self, mocker):
         current_app_mock = MagicMock()
         current_app_mock.config = {
             "AUTH_COOKIE_KEY": "a"
         }
         request_mock = MagicMock()
         request_mock.cookies = {}
-        with patch('src.middleware.auth.auth_context.current_app', current_app_mock):
-            with patch('src.middleware.auth.auth_context.request', request_mock):
-                with pytest.raises(UserNotLoggedInError):
-                    get_auth_context()
+        mocker.patch('src.middleware.auth.auth_context.current_app', current_app_mock)
+        mocker.patch('src.middleware.auth.auth_context.request', request_mock)
+        with pytest.raises(UserNotLoggedInError):
+            get_auth_context()

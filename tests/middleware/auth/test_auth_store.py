@@ -20,7 +20,7 @@ class TestAuthStore:
         user = User(username, password)
         self.auth_store.create_user(user)
         self.db_session_mock.add.assert_called_with(user)
-        self.db_session_mock.flush.assert_called_once()
+        self.db_session_mock.commit.assert_called_once()
 
     def test_create_user_raises_error_when_user_already_exists(self):
         username, password = "1", "2"

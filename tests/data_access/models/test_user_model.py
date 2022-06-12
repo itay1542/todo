@@ -1,8 +1,10 @@
-from unittest.mock import patch
-
 import pytest
 
 from src.data_access.models.user_model import User
+import pytest
+
+from src.data_access.models.user_model import User
+
 
 class TestUserModel:
     def test_throws_error_when_trying_to_access_password(self):
@@ -10,10 +12,10 @@ class TestUserModel:
         with pytest.raises(AttributeError):
             password = user.password
 
-    @patch('src.data_access.models.user_model.generate_password_hash', return_value="mock")
-    def test_calls_generate_password_hash_on_given_password(self, mock_func):
-            user = User('username', 'password')
-            assert user.password_hash == "mock"
+    def test_calls_generate_password_hash_on_given_password(self, mocker):
+        mocker.patch('src.data_access.models.user_model.generate_password_hash', return_value="mock")
+        user = User('username', 'password')
+        assert user.password_hash == "mock"
 
     def test_verify_password_returns_true_when_given_password_equals_init_password(self):
         password = "password"

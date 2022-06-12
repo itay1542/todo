@@ -18,8 +18,8 @@ class TodosResource(Resource):
 
     def post(self):
         args = parser.parse_args()
-        title, datetime = args['title'], args['datetime']
         try:
+            title, datetime = args['title'], args['datetime']
             user_id = get_auth_context()
             todo = TodoBuilder(user_id, title) \
                 .set_date_time(datetime) \
@@ -28,6 +28,8 @@ class TodosResource(Resource):
             return jsonify(inserted_entry.toDict())
         except TodoException as e:
             abort(e.code, e)
+        except KeyError as e:
+            abort(400, e)
 
     def get(self):
         try:
