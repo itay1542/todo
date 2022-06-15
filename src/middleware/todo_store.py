@@ -3,6 +3,7 @@ from sqlalchemy.exc import NoResultFound
 from src.data_access.models.todo_entry import TodoEntry
 from src.middleware.abstract_store import AbstractStore
 from src.middleware.decorators.rollback_transaction_on_exception import rollback_transaction_on_exception
+from src.middleware.exceptions.failed_database_operation_error import FailedDatabaseOperationError
 
 
 class TodoStore(AbstractStore):
@@ -25,5 +26,8 @@ class TodoStore(AbstractStore):
 
     @rollback_transaction_on_exception("_db_session")
     def delete_todo(self, id: int):
-        self._db_session.query(TodoEntry).filter(TodoEntry.id == id).delete()
-        self._db_session.commit()
+        try:
+            self._db_session.query(TodoEntry).filter(TodoEntry.id == id).delete()
+            self._db_session.commit()
+        except Exception as e:
+            raise FailedDatabaseOperationError("TodoEntry",  e.__str__())

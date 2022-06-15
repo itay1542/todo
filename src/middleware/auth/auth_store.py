@@ -1,11 +1,11 @@
+from src.common.todo_exception import TodoException
 from src.data_access.models.user_model import User
 from sqlalchemy.exc import IntegrityError, NoResultFound
 
 from src.middleware.abstract_store import AbstractStore
 from src.middleware.decorators.rollback_transaction_on_exception import rollback_transaction_on_exception
-from src.middleware.exc.auth.incorrect_credentials_error import IncorrectCredentialsError
-from src.middleware.exc.auth.user_already_exists_error import UserAlreadyExistsError
-from src.middleware.exc.auth.user_not_found_error import UserNotFoundError
+from src.middleware.exceptions.auth.user_already_exists_error import UserAlreadyExistsError
+from src.middleware.exceptions.auth.user_not_found_error import UserNotFoundError
 
 
 class AuthStore(AbstractStore):
@@ -33,3 +33,8 @@ class AuthStore(AbstractStore):
                 raise IncorrectCredentialsError(F"incorrect credentials for user: ${username}")
         except NoResultFound:
             raise UserNotFoundError()
+
+
+class IncorrectCredentialsError(TodoException):
+    def __init__(self, msg: str):
+        super().__init__(error_code=401, msg=msg)

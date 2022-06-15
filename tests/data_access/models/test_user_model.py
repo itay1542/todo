@@ -1,9 +1,8 @@
 import pytest
 
 from src.data_access.models.user_model import User
-import pytest
 
-from src.data_access.models.user_model import User
+import src.data_access.models.user_model as user_model
 
 
 class TestUserModel:
@@ -13,7 +12,7 @@ class TestUserModel:
             password = user.password
 
     def test_calls_generate_password_hash_on_given_password(self, mocker):
-        mocker.patch('src.data_access.models.user_model.generate_password_hash', return_value="mock")
+        mocker.patch.object(user_model,'generate_password_hash', return_value="mock")
         user = User('username', 'password')
         assert user.password_hash == "mock"
 
@@ -32,4 +31,4 @@ class TestUserModel:
             "username": "username"
         }
         user = User(expected["username"], 'some password')
-        assert user.toDict() == expected
+        assert user.to_dict() == expected

@@ -4,10 +4,9 @@ import pytest
 from sqlalchemy.exc import IntegrityError, NoResultFound
 
 from src.data_access.models.user_model import User
-from src.middleware.auth.auth_store import AuthStore
-from src.middleware.exc.auth.incorrect_credentials_error import IncorrectCredentialsError
-from src.middleware.exc.auth.user_already_exists_error import UserAlreadyExistsError
-from src.middleware.exc.auth.user_not_found_error import UserNotFoundError
+from src.middleware.auth.auth_store import AuthStore, IncorrectCredentialsError
+from src.middleware.exceptions.auth.user_already_exists_error import UserAlreadyExistsError
+from src.middleware.exceptions.auth.user_not_found_error import UserNotFoundError
 
 from tests.fixtures import mock_user
 

@@ -3,11 +3,10 @@ from src.data_access.models.todo_entry import TodoEntry
 
 from datetime import datetime as dt
 
-from src.middleware.exc.todos import *
+from src.middleware.exceptions.todos import *
 
 
 class TodoBuilder:
-    _datetime = None
 
     def __init__(self, user_id: int, title: str):
         self._user_id = user_id
