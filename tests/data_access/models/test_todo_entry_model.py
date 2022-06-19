@@ -1,21 +1,25 @@
 from datetime import datetime
 
-from src.data_access.models.todo_entry import TodoEntry
 import src.data_access.models.user_model as user_model
+from src.data_access.models.todo_entry import TodoEntry
 
 
-class TestTodoEntryModel:
-
-    def test_to_dict_calls_to_nested_user_to_dict(self, mocker):
+class TestSerialize:
+    def test_serialize_calls_to_nested_users_serialize(self, mocker):
         mock_user = mocker.patch.object(user_model, "User")
-        mock_user.to_dict.return_value = {}
-        expected = {
+        mock_user.serialize.return_value = {}
+        expected_serialized_todo = {
             "title": "title",
             "id": None,
             "date_time": datetime.now(),
             "user": {},
-            "user_id": 1
+            "user_id": 1,
         }
-        todo = TodoEntry(expected["user_id"], expected["title"], expected["date_time"])
+        todo = TodoEntry(
+            expected_serialized_todo["user_id"],
+            expected_serialized_todo["title"],
+            expected_serialized_todo["date_time"],
+        )
         todo.user = mock_user
-        assert todo.to_dict() == expected
+        actual = todo.serialize()
+        assert actual == expected_serialized_todo

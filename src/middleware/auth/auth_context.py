@@ -1,6 +1,7 @@
-from flask import request, current_app
+from flask import current_app, request
 
-from src.middleware.exceptions.auth.user_not_logged_in_error import UserNotLoggedInError
+from src.middleware.exceptions.auth.user_not_logged_in_error import \
+    UserNotLoggedInError
 
 
 def get_auth_context():

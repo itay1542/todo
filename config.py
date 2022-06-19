@@ -7,5 +7,6 @@ class BaseConfig:
     AUTH_COOKIE_KEY = "user_id"
     DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-def get_configuration() -> type(BaseConfig):
+
+def get_configuration() -> BaseConfig:
     return BaseConfig()

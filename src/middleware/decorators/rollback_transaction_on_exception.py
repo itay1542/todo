@@ -1,4 +1,3 @@
-
 def rollback_transaction_on_exception(session_attribute: str):
     def _inner(func):
         def wrapper(self, *args, **kwargs):
@@ -8,5 +7,7 @@ def rollback_transaction_on_exception(session_attribute: str):
             except Exception as e:
                 session.rollback()
                 raise e
+
         return wrapper
+
     return _inner
