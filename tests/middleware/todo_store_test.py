@@ -18,7 +18,9 @@ def todo_store(mock_db_session):
 class TestSaveTodo:
     def test_adds_to_db(self, mock_db_session, todo_store):
         todo_entry = TodoEntry(1, "title")
+
         todo_store.save_todo(todo_entry)
+
         mock_db_session.add.assert_called_with(todo_entry)
         mock_db_session.commit.assert_called_once()
 
@@ -28,5 +30,7 @@ class TestGetAllTodos:
         self, mock_db_session, todo_store
     ):
         mock_db_session.query.side_effect = NoResultFound()
+
         actual_todos = todo_store.get_all_todos(1)
+
         assert actual_todos == []

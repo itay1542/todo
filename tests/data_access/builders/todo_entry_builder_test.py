@@ -44,7 +44,9 @@ class TestBuild:
         expected_title = "title"
         expected_user_id = 1
         builder = TodoBuilder(expected_user_id, expected_title)
+
         built_todo = builder.build()
+
         assert built_todo.user_id == expected_user_id
         assert built_todo.title == expected_title
         assert built_todo.date_time is None

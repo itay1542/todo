@@ -28,6 +28,7 @@ class TestGetAuthContext:
         mock_request.cookies["a"] = expected_cookie_value
 
         actual_context_value = get_auth_context()
+
         assert actual_context_value == expected_cookie_value
 
     def test_throws_auth_error_on_missing_cookie(self, mock_current_app, mock_request):

@@ -11,8 +11,8 @@ class TestSerialize:
         expected_serialized_todo = {
             "title": "title",
             "id": None,
-            "date_time": datetime.now(),
-            "user": {},
+            "date_time": mocker.Mock(),
+            "user": mock_user.serialize.return_value,
             "user_id": 1,
         }
         todo = TodoEntry(
@@ -21,5 +21,7 @@ class TestSerialize:
             expected_serialized_todo["date_time"],
         )
         todo.user = mock_user
-        actual = todo.serialize()
-        assert actual == expected_serialized_todo
+
+        actual_serialized_todo = todo.serialize()
+
+        assert actual_serialized_todo == expected_serialized_todo

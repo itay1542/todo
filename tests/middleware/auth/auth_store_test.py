@@ -31,13 +31,16 @@ class TestCreateUser:
     def test_adds_new_user_to_db_session(self, mock_db_session, auth_store):
         username, password = "1", "2"
         user = User(username, password)
+
         auth_store.create_user(user)
-        mock_db_session.add.assert_called_with(user)
+
+        mock_db_session.add.assert_called_once_with(user)
         mock_db_session.commit.assert_called_once()
 
     def test_raises_error_when_user_already_exists(self, mock_db_session, auth_store):
         username, password = "1", "2"
         mock_db_session.commit.side_effect = IntegrityError("something", "123", "1")
+
         with pytest.raises(UserAlreadyExistsError):
             auth_store.create_user(User(username, password))
 
@@ -50,6 +53,7 @@ class TestGetUser:
         mock_db_session.query.return_value = mock_user
 
         returned_user = auth_store.get_user("1", "2")
+
         assert returned_user == mock_user
 
     def test_raises_incorrect_credentials_error_when_verify_password_returns_false(
