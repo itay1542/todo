@@ -2,8 +2,7 @@ import pytest
 
 import src.middleware.auth.auth_context as auth_context
 from src.middleware.auth.auth_context import get_auth_context
-from src.middleware.exceptions.auth.user_not_logged_in_error import \
-    UserNotLoggedInError
+from src.middleware.exceptions.auth.user_not_logged_in_error import UserNotLoggedInError
 
 
 @pytest.fixture

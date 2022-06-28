@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Union
+from typing import Any, Union, Optional
 
 from sqlalchemy import VARCHAR, Column, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import relationship
@@ -18,13 +18,13 @@ class TodoEntry(SerializableModel):
         "UserId", Integer, ForeignKey(f"{User.__tablename__}.ID"), nullable=False
     )
     user: Any = relationship("User", backref="todos")
-    title: Union[str, Column] = Column("Title", VARCHAR(50), nullable=False)
+    title: Optional[Union[str, Column]] = Column("Title", VARCHAR(50), nullable=False)
     date_time: Union[datetime, Column] = Column("DateTime", DateTime)
 
     def __init__(self, user_id: int, title: str, date_time: datetime = None):
         self.user_id = user_id
         self.title = title
-        self.date_time = date_time # type: ignore
+        self.date_time = date_time  # type: ignore
 
     def serialize(self):
         return {

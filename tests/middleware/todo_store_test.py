@@ -1,5 +1,5 @@
 import pytest
-from sqlalchemy.exc import NoResultFound # type: ignore
+from sqlalchemy.exc import NoResultFound  # type: ignore
 
 from src.data_access.models.todo_entry import TodoEntry
 from src.middleware.todo_store import TodoStore

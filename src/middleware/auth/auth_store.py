@@ -1,14 +1,15 @@
-from sqlalchemy.exc import IntegrityError, NoResultFound # type: ignore
+from sqlalchemy.exc import IntegrityError, NoResultFound  # type: ignore
 
 from src.common.todo_exception import TodoException
 from src.data_access.models.user_model import User
 from src.middleware.abstract_store import AbstractStore
-from src.middleware.decorators.rollback_transaction_on_exception import \
-    rollback_transaction_on_exception
-from src.middleware.exceptions.auth.user_already_exists_error import \
-    UserAlreadyExistsError
-from src.middleware.exceptions.auth.user_not_found_error import \
-    UserNotFoundError
+from src.middleware.decorators.rollback_transaction_on_exception import (
+    rollback_transaction_on_exception,
+)
+from src.middleware.exceptions.auth.user_already_exists_error import (
+    UserAlreadyExistsError,
+)
+from src.middleware.exceptions.auth.user_not_found_error import UserNotFoundError
 
 
 class AuthStore(AbstractStore):

@@ -3,8 +3,10 @@ from typing import Optional
 
 from src.common.get_config import get_config
 from src.data_access.models.todo_entry import TodoEntry
-from src.middleware.exceptions.todos import (BadServerConfiguration,
-                                             UnsupportedDatetimeFormatError)
+from src.middleware.exceptions.todos import (
+    BadServerConfiguration,
+    UnsupportedDatetimeFormatError,
+)
 
 
 class TodoBuilder:

@@ -42,6 +42,6 @@ class AuthResource(Resource):
     def _generate_response_with_user_cookie(self, cookie_value: int):
         res = make_response()
         res.set_cookie(
-            current_app.config.get("AUTH_COOKIE_KEY"), value=str(cookie_value) # type: ignore
+            current_app.config.get("AUTH_COOKIE_KEY"), value=str(cookie_value)  # type: ignore
         )
         return res

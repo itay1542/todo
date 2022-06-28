@@ -1,11 +1,13 @@
-from sqlalchemy.exc import NoResultFound # type: ignore
+from sqlalchemy.exc import NoResultFound  # type: ignore
 
 from src.data_access.models.todo_entry import TodoEntry
 from src.middleware.abstract_store import AbstractStore
-from src.middleware.decorators.rollback_transaction_on_exception import \
-    rollback_transaction_on_exception
-from src.middleware.exceptions.failed_database_operation_error import \
-    FailedDatabaseOperationError
+from src.middleware.decorators.rollback_transaction_on_exception import (
+    rollback_transaction_on_exception,
+)
+from src.middleware.exceptions.failed_database_operation_error import (
+    FailedDatabaseOperationError,
+)
 
 
 class TodoStore(AbstractStore):
